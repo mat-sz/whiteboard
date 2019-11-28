@@ -22,7 +22,7 @@ wss.on('connection', function connection(ws) {
 
     ws.send(JSON.stringify({
         type: 'initialData',
-        dataURL: canvas.toDataURL('image/jpeg'),
+        dataURL: canvas.toDataURL('image/png'),
         width: canvasWidth,
         height: canvasHeight,
     }));
