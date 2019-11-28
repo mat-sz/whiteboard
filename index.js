@@ -11,9 +11,7 @@ function prepareCanvas() {
     ctx.fillStyle = 'white';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     
-    ctx.strokeStyle = 'red';
     ctx.lineCap = 'round';
-    ctx.lineWidth = 10;
 }
 
 prepareCanvas();
@@ -37,6 +35,9 @@ wss.on('connection', function connection(ws) {
                 switch (json.type) {
                     case 'lineSegment':
                         if (!json.x1 || !json.x2 || !json.y1 || !json.y2) return;
+
+                        ctx.strokeStyle = json.color ? json.color : 'red';
+                        ctx.lineWidth = json.width ? json.width : 10;
 
                         ctx.beginPath();
                         ctx.moveTo(json.x1, json.y1);
