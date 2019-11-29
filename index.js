@@ -30,6 +30,7 @@ wss.on('connection', function connection(ws) {
     ws.on('message', function incoming(data) {
         try {
             const json = JSON.parse(data);
+            let broadcast = false;
             
             if (json && json.type) {
                 switch (json.type) {
@@ -45,17 +46,21 @@ wss.on('connection', function connection(ws) {
                         ctx.stroke();
                         ctx.closePath();
 
-                        for (let client of clients.filter((client) => client != ws)) {
-                            client.send(data);
-                        }
+                        broadcast = true;
                         break;
                     case 'clear':
                         prepareCanvas();
-
-                        for (let client of clients.filter((client) => client != ws)) {
-                            client.send(data);
-                        }
+                        broadcast = true;
                         break;
+                    case 'chat':
+                        broadcast = true;
+                        break;
+                }
+            }
+
+            if (broadcast) {
+                for (let client of clients.filter((client) => client != ws)) {
+                    client.send(data);
                 }
             }
         } catch (e) {}
