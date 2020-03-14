@@ -1,6 +1,12 @@
 {
+  "name": "whiteboard",
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
     "canvas": "^2.6.0",
     "ws": "^7.1.2"
+  },
+  "scripts": {
+    "start": "node index.js"
   }
 }
